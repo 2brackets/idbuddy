@@ -1,0 +1,77 @@
+# Byte-compiled / bytecode / compiled files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Distribution / packaging
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Installer logs
+pip-log.txt
+pip-delete-this-directory.txt
+
+# Unit test / coverage reports
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.hypothesis/
+
+# PyInstaller
+*.manifest
+*.spec
+
+# Environments
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+
+# PyCharm
+.idea/
+
+# VSCode
+.vscode/
+
+# macOS system files
+.DS_Store
+
+# Windows system files
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Ignore test coverage reports
+.coverage
+
+# Ignore Python wheel files
+*.whl
+
+# Ignore local SQLite database
+*.sqlite3
+
+# Exclude image files, but not in img folder
+*.png
+*.jpg
+*.jpeg
+*.gif
+*.ico
+# Allow img/ directory
+!img/
+!img/*.png
+!img/*.jpg
+!img/*.jpeg
+!img/*.gif
+!img/*.ico
