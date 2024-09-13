@@ -22,19 +22,21 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install pyinstaller
+          pip install -r requirements.txt  
 
       - name: Build executable with PyInstaller
         run: |
-          pyinstaller --onefile --windowed --icon=src/img/idbuddy.ico main.py
+          pyinstaller --onefile --windowed --icon=src/img/idbuddy.ico --name idBuddy --hidden-import=PIL main.py
+        # Inkludera Pillow och sätt namnet på .exe till idBuddy
 
-      - name: List dist directory  
+      - name: List dist directory  # Felsökning för att lista alla filer i dist/
         run: dir dist
 
       - name: Upload artifact (exe)
         uses: actions/upload-artifact@v3
         with:
           name: exe-file
-          path: dist/*.exe  
+          path: dist/idBuddy.exe  
 
   release:
     needs: build
@@ -45,12 +47,9 @@ jobs:
         with:
           name: exe-file
 
-      - name: List downloaded artifacts  
-        run: dir .
-
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: main.exe 
+          files: idBuddy.exe  
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
