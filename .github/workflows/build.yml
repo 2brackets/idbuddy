@@ -3,7 +3,7 @@ name: Build and Release
 on:
   push:
     tags:
-      - 'v*' 
+      - 'v*'  
 
 jobs:
   build:
@@ -24,23 +24,15 @@ jobs:
           pip install pyinstaller
 
       - name: Build executable with PyInstaller
-        run: pyinstaller --windowed main.py
-
-      - name: Download and install Inno Setup
         run: |
-          choco install innosetup  # Installera Inno Setup via Chocolatey
-        shell: cmd
+          pyinstaller --onefile --windowed --icon=src/img/idbuddy.ico main.py
+          # Bygg en enda exe-fil med ikonen
 
-      - name: Create Inno Setup installer
-        run: |
-          "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" config/installer_script.iss
-        shell: cmd
-
-      - name: Upload artifact (installer)
+      - name: Upload artifact (exe)
         uses: actions/upload-artifact@v3
         with:
-          name: installer
-          path: Output/setup.exe  
+          name: exe-file
+          path: dist/main.exe  # Sökvägen till den genererade exe-filen
 
   release:
     needs: build
@@ -49,11 +41,11 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: installer
+          name: exe-file
 
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: Output/setup.exe 
+          files: dist/main.exe  # Ladda upp exe-filen
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
