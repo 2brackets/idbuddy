@@ -11,10 +11,10 @@ jobs:
 
     steps:
       - name: Check out the repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v3
         with:
           python-version: '3.11.2'
 
@@ -37,7 +37,7 @@ jobs:
         shell: cmd
 
       - name: Upload artifact (installer)
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: installer
           path: Output/setup.exe  
@@ -47,7 +47,7 @@ jobs:
     runs-on: windows-latest
     steps:
       - name: Download artifact
-        uses: actions/download-artifact@v2
+        uses: actions/download-artifact@v3
         with:
           name: installer
 
