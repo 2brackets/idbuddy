@@ -26,8 +26,8 @@ jobs:
 
       - name: Build executable with PyInstaller
         run: |
-          pyinstaller --onefile --windowed --icon=src/img/idbuddy.ico --name idBuddy --hidden-import=PIL main.py
-        # Inkludera Pillow och sätt namnet på .exe till idBuddy
+          pyinstaller --onefile --windowed --icon=src/img/idbuddy.ico --name idBuddy --add-data "src/img/idbuddy.ico;src/img" --hidden-import=PIL main.py
+
 
       - name: List dist directory  # Felsökning för att lista alla filer i dist/
         run: dir dist
