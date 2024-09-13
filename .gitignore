@@ -62,16 +62,17 @@ desktop.ini
 # Ignore local SQLite database
 *.sqlite3
 
-# Exclude image files, but not in img folder
+# Exclude image files, but allow images in img folder
 *.png
 *.jpg
 *.jpeg
 *.gif
 *.ico
-# Allow img/ directory
-!img/
-!img/*.png
-!img/*.jpg
-!img/*.jpeg
-!img/*.gif
-!img/*.ico
+
+# Allow img/ directory and all image files in it
+!src/img/
+!src/img/*.png
+!src/img/*.jpg
+!src/img/*.jpeg
+!src/img/*.gif
+!src/img/*.ico
