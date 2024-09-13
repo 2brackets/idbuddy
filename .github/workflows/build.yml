@@ -27,15 +27,14 @@ jobs:
         run: |
           pyinstaller --onefile --windowed --icon=src/img/idbuddy.ico main.py
 
-      - name: List dist directory
+      - name: List dist directory  
         run: dir dist
-          
 
       - name: Upload artifact (exe)
         uses: actions/upload-artifact@v3
         with:
           name: exe-file
-          path: dist/main.exe  # Sökvägen till den genererade exe-filen
+          path: dist/*.exe  
 
   release:
     needs: build
@@ -46,9 +45,12 @@ jobs:
         with:
           name: exe-file
 
+      - name: List downloaded artifacts  
+        run: dir .
+
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: dist/main.exe  # Ladda upp exe-filen
+          files: dist/*.exe 
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
