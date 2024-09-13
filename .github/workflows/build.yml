@@ -26,7 +26,10 @@ jobs:
       - name: Build executable with PyInstaller
         run: |
           pyinstaller --onefile --windowed --icon=src/img/idbuddy.ico main.py
-          # Bygg en enda exe-fil med ikonen
+
+      - name: List dist directory
+        run: dir dist
+          
 
       - name: Upload artifact (exe)
         uses: actions/upload-artifact@v3
