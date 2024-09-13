@@ -26,11 +26,7 @@ jobs:
 
       - name: Build executable with PyInstaller
         run: |
-          pyinstaller --onefile --windowed --icon=src/img/idbuddy.ico --name idBuddy \
-          --add-data "src/img/idbuddy.ico;src/img" \
-          --add-data "src/img/idbuddy_logo.png;src/img" \
-          --add-data "src/img/2brackets.png;src/img" \
-          --hidden-import=PIL main.py
+          pyinstaller --onefile --windowed --icon=src/img/idbuddy.ico --name idBuddy --add-data "src/img/idbuddy.ico;src/img" --add-data "src/img/idbuddy_logo.png;src/img" --add-data "src/img/2brackets.png;src/img" --hidden-import=PIL main.py
 
       - name: List dist directory  
         run: dir dist
