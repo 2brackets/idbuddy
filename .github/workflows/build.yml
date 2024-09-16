@@ -42,11 +42,11 @@ jobs:
       - name: List dist directory
         run: dir dist
 
-      - name: Upload artifact (exe)
+      - name: Upload artifact (idBuddy directory)
         uses: actions/upload-artifact@v3
         with:
-          name: exe-file
-          path: dist/idBuddy.exe
+          name: idBuddy-folder
+          path: dist/idBuddy
 
   release:
     needs: build
@@ -55,11 +55,16 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v3
         with:
-          name: exe-file
+          name: idBuddy-folder
 
-      - name: Create GitHub Release
+      - name: Create a zip file of the folder
+        run: |
+          zip -r idBuddy.zip dist/idBuddy
+
+      - name: Upload zip to GitHub release
         uses: softprops/action-gh-release@v1
         with:
-          files: dist/idBuddy.exe
+          files: idBuddy.zip
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
