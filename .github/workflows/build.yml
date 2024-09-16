@@ -59,7 +59,8 @@ jobs:
 
       - name: Create a zip file of the folder
         run: |
-          zip -r idBuddy.zip dist/idBuddy
+            Compress-Archive -Path dist/idBuddy -DestinationPath idBuddy.zip
+        shell: pwsh
 
       - name: Upload zip to GitHub release
         uses: softprops/action-gh-release@v1
