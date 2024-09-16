@@ -5,7 +5,7 @@ from tkinter import Tk, Frame, Label, Button, Entry
 from PIL import Image, ImageTk
 from src.person import Person
 from src.id_control import IdControl
-from version import __version__
+from config.version import __version__
 
 def start_gui():
     root = Tk()

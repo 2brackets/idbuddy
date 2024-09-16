@@ -1,10 +1,9 @@
-from version import __version__
+from config.version import __version__
 
 version_info = f'''
     # UTF-8
     #
     # Comments can be included here with the '#' symbol.
-
     VSVersionInfo(
       ffi=FixedFileInfo(
         filevers=({__version__.replace('.', ', ')}, 0), 
@@ -39,4 +38,5 @@ version_info = f'''
 '''
 
 with open("version.txt", "w") as version_file:
-    version_file.write(version_info)
+  version_file.write(version_info)
+print(f'Version file generated successfully for version {__version__}')

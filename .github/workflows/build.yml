@@ -2,8 +2,10 @@ name: Build and Release
 
 on:
   push:
+    branches:
+      - main
     tags:
-      - 'v*'  
+      - 'v*'
 
 jobs:
   build:
@@ -24,22 +26,29 @@ jobs:
           pip install pyinstaller
           pip install -r requirements.txt
 
-      - name: Generate version.txt
+      - name: Generate version.txt  
         run: |
-          python generate_version_file.py
+          python ./config/generate_version_file.py
 
-      - name: Build executable with PyInstaller
+      - name: Generate spec file  
         run: |
-          pyinstaller .\main.spec
+          python ./config/generate_spec_file.py
 
-      - name: List dist directory  
+      - name: List project directory for debugging  
+        run: dir
+
+      - name: Build executable with PyInstaller  
+        run: |
+          pyinstaller ./main.spec
+
+      - name: List dist directory
         run: dir dist
 
       - name: Upload artifact (exe)
         uses: actions/upload-artifact@v3
         with:
           name: exe-file
-          path: dist/idBuddy.exe  
+          path: dist/idBuddy.exe
 
   release:
     needs: build
@@ -53,6 +62,6 @@ jobs:
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v1
         with:
-          files: idBuddy.exe  
+          files: dist/idBuddy.exe
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
