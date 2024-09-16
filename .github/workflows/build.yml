@@ -56,15 +56,16 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: idBuddy-folder
+          path: idBuddy  # Extrahera artifact till en mapp som heter "idBuddy"
 
-      - name: List files in idBuddy directory for verification  
-        run: dir idBuddy  
-        shell: pwsh  
+      - name: List files in idBuddy directory for verification
+        run: dir idBuddy
+        shell: pwsh
 
       - name: Create a zip file of the folder
         run: |
           Compress-Archive -Path idBuddy -DestinationPath idBuddy.zip
-        shell: pwsh 
+        shell: pwsh
 
       - name: Upload zip to GitHub release
         uses: softprops/action-gh-release@v1
