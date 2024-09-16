@@ -1,7 +1,7 @@
 # generate_spec_file.py
 
 import os
-from config.version import __version__
+from version import __version__
 
 spec_content = f"""
 # -*- mode: python ; coding: utf-8 -*-
