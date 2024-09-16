@@ -57,14 +57,14 @@ jobs:
         with:
           name: idBuddy-folder
 
-      - name: List files in idBuddy directory for verification  # Extra steg för att verifiera mappen
-        run: dir dist/idBuddy
-        shell: pwsh  # PowerShell för kommandot
+      - name: List files in idBuddy directory for verification  
+        run: dir idBuddy  
+        shell: pwsh  
 
       - name: Create a zip file of the folder
         run: |
-          Compress-Archive -Path dist/idBuddy -DestinationPath idBuddy.zip
-        shell: pwsh  # Använd PowerShell för komprimering
+          Compress-Archive -Path idBuddy -DestinationPath idBuddy.zip
+        shell: pwsh 
 
       - name: Upload zip to GitHub release
         uses: softprops/action-gh-release@v1
