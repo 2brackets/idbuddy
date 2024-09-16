@@ -5,6 +5,7 @@ from tkinter import Tk, Frame, Label, Button, Entry
 from PIL import Image, ImageTk
 from src.person import Person
 from src.id_control import IdControl
+from version import __version__
 
 def start_gui():
     root = Tk()
@@ -13,7 +14,6 @@ def start_gui():
     root.resizable(width=False, height=False)
     root.configure(bg="#282c34")
 
-    # Använd resource_path för att hitta ikonen
     icon = ImageTk.PhotoImage(file=resource_path("src/img/idbuddy.ico"))
     root.iconphoto(True, icon)
 
@@ -59,10 +59,9 @@ def setup_start_page(start_page, result_page):
                     width=20, height=2, bg="#F0B437", fg="#2D323B", font=("Helvetica", 12), cursor="hand2")
     button.pack(pady=30)
 
-    version_label = Label(start_page, text="Version 1.0.0", font=("Helvetica", 10), fg="#B3B4E8", bg="#282c34")
-    version_label.place(relx=1.0, rely=1.0, anchor="se", x=-10, y=-10)  # Placera i nedre högra hörnet
+    version_label = Label(start_page, text=f"Version {__version__}", font=("Helvetica", 10), fg="#B3B4E8", bg="#282c34")
+    version_label.place(relx=1.0, rely=1.0, anchor="se", x=-10, y=-10) 
 
-    # Använd resource_path för att hitta ikonen för 2brackets
     small_img = Image.open(resource_path("src/img/2brackets.png"))
     small_resized_img = small_img.resize((40, 40))  
     small_icon = ImageTk.PhotoImage(small_resized_img)
@@ -88,15 +87,13 @@ def on_button_click(text_input, error_label, start_page, result_page):
             gender = person.determine_gender()
             birthday_today = person.is_birthday_today()
             
-            # Skicka både start_page och result_page till show_result_page
             show_result_page(start_page, result_page, birthdate, age, gender, birthday_today)
-            show_frame(result_page)  # Visa resultatsidan
+            show_frame(result_page)  
 
     text_input.delete(0, 'end')
 
 
 def show_result_page(start_page, result_page, birthdate, age, gender, birthday_today):
-    # Rensa tidigare widgets i result_frame innan vi lägger till nya
     for widget in result_page.winfo_children():
         widget.destroy()
 
@@ -105,7 +102,7 @@ def show_result_page(start_page, result_page, birthdate, age, gender, birthday_t
 
     labels = [
         ("BirthDay:", birthdate, "#B3B4E8"),
-        ("Age:", age, "#8CF070" if age >= 18 else "#F04843"),  # Sätt färg baserat på åldern
+        ("Age:", age, "#8CF070" if age >= 18 else "#F04843"), 
         ("Gender:", gender, "#B3B4E8"),
         ("Birthday to day:", "Yes, Happy birthday" if birthday_today else "No", "#B3B4E8")
     ]

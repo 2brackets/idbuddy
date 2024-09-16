@@ -22,11 +22,15 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install pyinstaller
-          pip install -r requirements.txt  
+          pip install -r requirements.txt
+
+      - name: Generate version.txt
+        run: |
+          python generate_version_file.py
 
       - name: Build executable with PyInstaller
         run: |
-          pyinstaller --onefile --windowed --icon=src/img/idbuddy.ico --name idBuddy --add-data "src/img/idbuddy.ico;src/img" --add-data "src/img/idbuddy_logo.png;src/img" --add-data "src/img/2brackets.png;src/img" --hidden-import=PIL main.py
+          pyinstaller main.spec
 
       - name: List dist directory  
         run: dir dist
