@@ -1,6 +1,3 @@
-# generate_spec_file.py
-
-import os
 from version import __version__
 
 spec_content = f"""
@@ -57,7 +54,7 @@ coll = COLLECT(
 )
 """
 
-with open('main.spec', 'w') as spec_file:
+with open('main.spec', 'w', encoding="utf-8") as spec_file:
     spec_file.write(spec_content)
 
 print(f'Spec file generated successfully for version {__version__}')

@@ -37,6 +37,7 @@ version_info = f'''
     )
 '''
 
-with open("version.txt", "w") as version_file:
+with open("version.txt", "w", encoding="utf-8") as version_file:
   version_file.write(version_info)
+  
 print(f'Version file generated successfully for version {__version__}')
