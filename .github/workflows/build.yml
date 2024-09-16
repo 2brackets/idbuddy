@@ -30,7 +30,7 @@ jobs:
 
       - name: Build executable with PyInstaller
         run: |
-          pyinstaller main.spec
+          pyinstaller .\main.spec
 
       - name: List dist directory  
         run: dir dist
