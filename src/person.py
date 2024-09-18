@@ -11,7 +11,10 @@ class Person(object):
     
     @property
     def last_four(self) -> int:
-        return str(self.id_control.get_last_four())
+        last_four = self.id_control.get_last_four()
+        if last_four is None:
+            return None
+        return str(last_four)
 
     def get_age(self) -> int:
         birth_date = datetime.strptime(self.birthday, "%Y%m%d")
@@ -27,7 +30,10 @@ class Person(object):
         return formatted_date
 
     def determine_gender(self) -> str:
-        third_digit = int(self.last_four[2]) 
+        last_four = self.last_four
+        if last_four is None:
+            return "Unknown"
+        third_digit = int(last_four[2]) 
         if third_digit % 2 == 0:
             return "Women"
         else:

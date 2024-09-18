@@ -1,7 +1,7 @@
 import webbrowser
 import os
 import sys
-from tkinter import Tk, Frame, Label, Button, Entry
+from tkinter import BooleanVar, Checkbutton, Tk, Frame, Label, Button, Entry
 from PIL import Image, ImageTk
 from src.person import Person
 from src.id_control import IdControl
@@ -33,17 +33,15 @@ def start_gui():
 
     root.mainloop()
 
-def setup_start_page(start_page, result_page):
-    # Använd resource_path för att hitta logobilden
+def setup_start_page(start_page: Frame, result_page: Frame):
     img = Image.open(resource_path("src/img/idbuddy_logo.png"))
     resized_img = img.resize((250, 250))
     logo = ImageTk.PhotoImage(resized_img)
 
     logo_label = Label(start_page, image=logo, bg="#282c34")
-    logo_label.image = logo  # Behåll referensen för att undvika att bilden försvinner
+    logo_label.image = logo 
     logo_label.pack(pady=20)
 
-    # Text input ram
     entry_frame = Frame(start_page, bg="#F0B437", bd=1)
     entry_frame.pack(pady=10)
 
@@ -52,13 +50,24 @@ def setup_start_page(start_page, result_page):
                        highlightthickness=1, highlightbackground="#2D323B", highlightcolor="#F0B437")
     text_input.pack(ipady=5, padx=3, pady=3)
 
+    text_input.focus_set()
+
+    swedish_id_var = BooleanVar(value=True)
+    swedish_id_checkbox = Checkbutton(start_page, text="Swedish ID", variable=swedish_id_var, font=("Helvetica", 16), 
+                                      bg="#282c34", fg="#F0B437", selectcolor="#282c34", activebackground="#282c34", 
+                                      activeforeground="#B3B4E8")
+    swedish_id_checkbox.pack(pady=5)
+    swedish_id_checkbox.config(highlightbackground="#F0B437", highlightthickness=10)
+
     error_label = Label(start_page, text="", font=("Helvetica", 15), fg="#F04843", bg="#282c34")
-    error_label.pack(pady=10)
+    error_label.pack(pady=5)
 
-    button = Button(start_page, text="Check ID >", command=lambda: on_button_click(text_input, error_label, start_page, result_page), 
+    button = Button(start_page, text="Check ID >", command=lambda: on_button_click(text_input, error_label, start_page, result_page, swedish_id_var), 
                     width=20, height=2, bg="#F0B437", fg="#2D323B", font=("Helvetica", 12), cursor="hand2")
-    button.pack(pady=30)
+    button.pack(pady=20)
 
+    text_input.bind('<Return>', lambda event: on_button_click(text_input, error_label, start_page, result_page, swedish_id_var))
+    
     version_label = Label(start_page, text=f"Version {__version__}", font=("Helvetica", 10), fg="#B3B4E8", bg="#282c34")
     version_label.place(relx=1.0, rely=1.0, anchor="se", x=-10, y=-10) 
 
@@ -70,14 +79,16 @@ def setup_start_page(start_page, result_page):
     small_image_label.place(relx=0.0, rely=1.0, anchor="sw", x=10, y=-10)
     small_image_label.bind("<Button-1>", lambda e: webbrowser.open_new("https://www.2brackets.com"))
 
-def on_button_click(text_input, error_label, start_page, result_page):
+
+def on_button_click(text_input: Entry, error_label: Label, start_page: Frame, result_page: Frame, swedish_id_var: BooleanVar):
     error_label.config(text="")
     text_value = text_input.get()
+    swedish_id = swedish_id_var.get()
 
     if not text_value:
         error_label.config(text="Please insert a ID number")
     else:
-        id_control = IdControl(text_value)
+        id_control = IdControl(text_value, swedish_id)
         if not id_control.person_id_valid:
             error_label.config(text=id_control.error_message)
         else:
@@ -115,6 +126,8 @@ def show_result_page(start_page, result_page, birthdate, age, gender, birthday_t
 
     back_button = Button(result_frame, text="< Back", command=lambda: show_frame(start_page), width=20, height=2, bg="#F0B437", fg="#2D323B", font=("Helvetica", 12), cursor="hand2")
     back_button.pack(pady=20)
+    back_button.focus_set()
+    back_button.bind('<Return>', lambda event: go_back_start_page(start_page))
 
 def resource_path(relative_path):
     try:
@@ -125,3 +138,15 @@ def resource_path(relative_path):
 
 def show_frame(frame):
     frame.tkraise()
+
+
+def go_back_start_page(start_page: Frame):
+    for widget in start_page.winfo_children():
+        if isinstance(widget, Frame):  
+            for child in widget.winfo_children():
+                if isinstance(child, Entry):
+                    child.delete(0, 'end') 
+                    child.focus_set()  
+                elif isinstance(child, Label):
+                    child.config(text="")  
+    show_frame(start_page)
