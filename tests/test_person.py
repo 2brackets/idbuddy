@@ -26,6 +26,11 @@ class TestPerson(unittest.TestCase):
     def test_determine_gender_male(self):
         self.assertEqual(self.person.determine_gender(), "Male")
 
+    def test_determine_gender_unknown(self):
+        id_control = IdControl("081201", False)
+        person = Person(id_control)
+        self.assertEqual(person.determine_gender(), "Unknown")
+
     def test_is_birthday_today(self):
         today_date = datetime.today()
         ten_years_ago = today_date.replace(year=today_date.year - 10)

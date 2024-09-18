@@ -38,5 +38,37 @@ class TestIdControl(unittest.TestCase):
         id_control = IdControl(valid_id)
         self.assertEqual(id_control.get_last_four(), 1234)
 
+    def test_born_in_20st_century_no_swedish_id(self):
+        valid_id = "19790404"
+        id_control = IdControl(valid_id, False)
+        self.assertEqual(id_control.get_birthday(), 19790404)
+
+    def test_last_four_born_in_20st_century_no_swedish_id(self):
+        valid_id = "19790404"
+        id_control = IdControl(valid_id, False)
+        self.assertEqual(id_control.get_last_four(), None)
+
+    def test_born_in_20st_without_first_two_century_no_swedish_id(self):
+        valid_id = "790404"
+        id_control = IdControl(valid_id, False)
+        self.assertEqual(id_control.get_birthday(), 19790404)
+
+    def test_born_in_21st_century_no_swedish_id(self):
+        valid_id = "20051204"
+        id_control = IdControl(valid_id, False)
+        self.assertEqual(id_control.get_birthday(), 20051204)
+
+    def test_last_four_born_in_21st_century_no_swedish_id(self):
+        valid_id = "20051204"
+        id_control = IdControl(valid_id, False)
+        self.assertEqual(id_control.get_last_four(), None)
+
+    def test_born_in_20st_without_first_two_century_no_swedish_id(self):
+        valid_id = "051204"
+        id_control = IdControl(valid_id, False)
+        self.assertEqual(id_control.get_birthday(), 20051204)
+
+
+
 if __name__ == '__main__':
     unittest.main()
