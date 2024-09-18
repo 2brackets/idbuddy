@@ -33,7 +33,7 @@ class IdControl(object):
             date_str = id[:8]
             century = ''  
         try:
-            birth_date = datetime.strptime(century + date_str, '%Y%m%d') if length == 12 else datetime.strptime(date_str, '%y%m%d')
+            birth_date = datetime.strptime(century + date_str, '%Y%m%d') 
         except ValueError:
             self.error_message = 'This is not a valid ID (invalid date).'
             return False
